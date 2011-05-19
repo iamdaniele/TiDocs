@@ -1,0 +1,160 @@
+<html>
+<head>
+	<meta name="viewport" content="user-scalable=yes, width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css">
+		* {font-family: "Helvetica Neue", "Helvetica", "Arial"; font-size: 1em; color: #333; word-wrap: break-word}
+		p {font-size: 0.8em}
+		a {-webkit-touch-callout: none !important;}
+		h3 {color: #f38400;}
+		.highlight {background: #fefbca;-webkit-border-radius:2pt;border-radius:2pt}
+		span.type {color: #aaa}
+		a.type {color: #aaa;text-decoration:none;font-weight:bold}
+		h4 {color: #f38400;margin-bottom:0}
+		p.param-description {margin-top:0}
+		h1 {font-size: 1.5em;color: #000;font-family: "Helvetica Neue", "Helvetica", "Arial", "Droid Serif";margin-bottom:0}
+		img {float: left;margin: 0 0.5em 0.2em 0;}
+		span.param-list>span:after {content: ", ";}
+		span.param-list>span:last-child:after {content: ""}
+		div.method {background: #f5f5f5; padding: 0.2em; margin: 1em 0;-webkit-border-radius:2pt;border-radius:2pt}
+		div.toggable {display:none}
+		div.quickjump span {
+			padding: 0.2em 0.2em 0.2em 20pt; 
+			height: 20pt; 
+			line-height: 20pt; 
+			display:inline-block;
+			word-wrap: normal; 
+			background-color: #eee;
+			background-repeat: no-repeat;
+			background-position: 5pt center;
+			margin:0.2em;
+			font-weight:bold;
+			color:#333;
+			-webkit-border-radius:2pt;
+			border-radius:2pt
+		}
+		div.quickjump span.methods {background-image:url(images/method.png)}
+		div.quickjump span.properties {background-image:url(images/property.png)}
+		div.quickjump span.events {background-image:url(images/event.png)}
+		div.quickjump span.notes {background-image:url(images/notes.png)}
+		div.quickjump span.examples {background-image:url(images/examples.png)}
+		div.platforms span {font-size: 0.8em; color: #888; display:inline-block;word-wrap: normal; background: #fefefe;text-decoration:none;padding:0.2em;margin:0.2em;-webkit-border-radius:2pt;border-radius:2pt}
+		div.platforms span.ipad:after {content: "iPad"}
+		div.platforms span.iphone:after {content: "iPhone"}
+		div.platforms span.android:after {content: "Android"}
+	</style>
+	<script src="zepto.js"></script>
+	<script>
+		var key = '{{key}}';
+		$(document).ready(function() {
+			$('a').not('.anchor').addClass('type').attr('href', 'javascript:void(0)');
+			
+			$('div.quickjump span').bind('tap', function(e) {
+				location.href = '#' + $(e.currentTarget).attr('class');
+				return false;
+			});
+			
+			$('.toggle').bind('tap', function(e) {
+				$(e.currentTarget).find('.toggable').toggle();
+				return false;
+			});
+			
+			if(key) {
+				location.href = '#' + key;
+				$('#' + key).next().children('h3').addClass('highlight');
+			}
+		})
+	</script>
+</head>
+<body>
+	<div class="head">
+		<h1>{{{section}}}</h1>
+		<div class="platforms">
+			{{#platforms}}
+				<span class="{{.}}"></span>
+			{{/platforms}}
+		</div>
+		{{{description}}}
+	</div>
+	<div class="quickjump">
+		{{#hasMethods}}<span class="methods">Methods</span>{{/hasMethods}}
+		{{#hasProperties}}<span class="properties">Properties</span>{{/hasProperties}}
+		{{#hasEvents}}<span class="events">Events</span>{{/hasEvents}}
+		{{#notes}}<span class="notes">Notes</span>{{/notes}}
+		{{#hasExamples}}<span class="examples">Examples</span>{{/hasExamples}}
+	</div>
+	{{#hasMethods}}
+		<div class="section">
+			<a class="anchor" id="methods"></a>
+			<h2>Methods</h2>	
+			{{#methods}}
+				<a class="anchor" id="{{name}}"></a>
+				<div class="method toggle">
+					<h3><span class="type">{{{returntype}}}</span> {{{name}}}<span class="param-list">({{#parameters}}<span class="type">{{{type}}}</span>{{/parameters}})</span></h3>
+					<p>{{{value}}}</p>
+					<div class="parameters toggable">
+						{{#parameters}}
+							<h4><span class="type">{{{type}}}</span> {{{name}}}</h4>
+							<p class="param-description">{{{description}}}</p>
+						{{/parameters}}
+					</div>
+				</div>
+			{{/methods}}
+		</div>
+	{{/hasMethods}}
+
+	{{#hasProperties}}
+		<a class="anchor" id="properties"></a>
+		<div class="section">
+			<h2>Properties</h2>
+			{{#properties}}
+				<a class="anchor" id="{{name}}"></a>
+				<div class="method">
+					<h3><span class="type">{{{type}}}</span> {{{name}}}</h3>
+					<p>{{{value}}}</p>
+				</div>
+			{{/properties}}
+		</div>
+	{{/hasProperties}}
+
+	{{#hasEvents}}
+		<a class="anchor" id="events"></a>
+		<div class="section">
+			<h2>Events</h2>
+			{{#events}}
+				<div class="method">
+					<h3><span class="type">{{{returntype}}}</span> {{{name}}}</h3>
+					<p>{{{value}}}</p>
+					<div class="parameters toggable">
+					{{#parameters}}
+						<h4><span class="type">{{{{type}}}}</span> {{{name}}}</h4>
+						<p>{{{description}}}</p>
+					{{/parameters}}
+					</div>
+				</div>
+			{{/events}}
+		</div>
+	{{/hasEvents}}
+
+	{{#notes}}
+		<a class="anchor" id="notes"></a>
+		<div class="section">
+			<h2>Notes</h2>
+			{{{notes}}}
+		</div>
+	{{/notes}}
+
+	{{#hasExamples}}
+		<a class="anchor" id="examples"></a>
+		<div class="section">
+			<h2>Examples</h2>
+			{{#examples}}
+				<div class="method">
+					<h3>{{{description}}}</h3>
+					{{{code}}}
+				</div>
+			{{/examples}}
+		</div>
+	{{/hasExamples}}
+</body>
+</html>
