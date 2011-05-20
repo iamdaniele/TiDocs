@@ -6,14 +6,29 @@ var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'docs.j
 var docs = JSON.parse(file.read().text);
 
 var path = Ti.UI.currentWindow.path;
-var section = docs[path];
 var webView = Ti.UI.createWebView();
-section = docs[path];
-section.section = path;
-section.key = Ti.UI.currentWindow.key || '';
-section.hasMethods = section.methods && section.methods.length && section.methods.length > 0;
-section.hasProperties = section.properties && section.properties.length && section.properties.length > 0;
-section.hasEvents = section.events && section.events.length && section.events.length > 0;
-section.hasExamples = section.examples && section.examples.length && section.examples.length > 0;
-webView.html = Mustache.to_html(body, section);
-Ti.UI.currentWindow.add(webView);
+Ti.UI.currentWindow.add(webView);	
+
+if(!path) {
+	Ti.App.addEventListener('entryWindow:view', function(e) {
+		path = e.path;
+		Ti.UI.currentWindow.title = e.title;
+		Ti.UI.currentWindow.key = e.key;
+		prepareView();
+	});
+}
+else {
+	prepareView();
+}
+
+function prepareView() {
+	var section = docs[path];
+	section = docs[path];
+	section.section = path;
+	section.key = Ti.UI.currentWindow.key || '';
+	section.hasMethods = section.methods && section.methods.length && section.methods.length > 0;
+	section.hasProperties = section.properties && section.properties.length && section.properties.length > 0;
+	section.hasEvents = section.events && section.events.length && section.events.length > 0;
+	section.hasExamples = section.examples && section.examples.length && section.examples.length > 0;
+	webView.html = Mustache.to_html(body, section);
+}

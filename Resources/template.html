@@ -1,9 +1,9 @@
 <html>
 <head>
-	<meta name="viewport" content="user-scalable=yes, width=device-width" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.6; user-scalable=1;" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<style type="text/css">
-		* {font-family: "Helvetica Neue", "Helvetica", "Arial"; font-size: 1em; color: #333; word-wrap: break-word}
+		body * {font-family: "Helvetica Neue", "Helvetica", "Arial"; font-size: 1em; color: #333; word-wrap: break-word}
 		p {font-size: 0.8em}
 		a {-webkit-touch-callout: none !important;}
 		h3 {color: #f38400;}
@@ -42,6 +42,7 @@
 		div.platforms span.ipad:after {content: "iPad"}
 		div.platforms span.iphone:after {content: "iPhone"}
 		div.platforms span.android:after {content: "Android"}
+		div.description img {display:block;max-width:100%;margin:0 auto}
 	</style>
 	<script src="zepto.js"></script>
 	<script>
@@ -74,7 +75,10 @@
 				<span class="{{.}}"></span>
 			{{/platforms}}
 		</div>
-		{{{description}}}
+		<div class="description">
+			{{{description}}}
+		</div>
+		<div style="clear:both">&nbsp;</div>
 	</div>
 	<div class="quickjump">
 		{{#hasMethods}}<span class="methods">Methods</span>{{/hasMethods}}

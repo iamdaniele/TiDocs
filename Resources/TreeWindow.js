@@ -27,14 +27,7 @@ var table = Ti.UI.createTableView({data: rows, filterAttribute: 'title'});
 // 	table.index = index;
 // }
 table.addEventListener('click', function(e) {
-	if(e.row.hasChild) {
-		var win = Ti.UI.createWindow({url: 'TreeWindow.js', path: e.rowData.fullName, title: e.rowData.path});
-		Ti.UI.currentTab.open(win, {animate: true});
-	}
-	else {
-		var win = Ti.UI.createWindow({url: 'Entry.js', path: e.rowData.fullName, title: e.rowData.fullName});
-		Ti.UI.currentTab.open(win, {animate: true});
-	}
+	Ti.App.fireEvent('treeWindow:click', {path: e.rowData.fullName, fullName: e.rowData.path || e.rowData.fullName, hasChild: e.row.hasChild});
 });
 Ti.UI.currentWindow.add(table);
 
