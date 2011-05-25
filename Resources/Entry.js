@@ -29,6 +29,17 @@ function prepareView() {
 	section.hasMethods = section.methods && section.methods.length && section.methods.length > 0;
 	section.hasProperties = section.properties && section.properties.length && section.properties.length > 0;
 	section.hasEvents = section.events && section.events.length && section.events.length > 0;
+	if(section.events) {
+		for(var i in section.events) {
+			if(section.events[i].properties) {
+				var properties = section.events[i].properties;
+				section.events[i].properties = [];
+				for(var p in properties) {
+					section.events[i].properties.push({name: p, description: properties[p]});
+				}			
+			}
+		}
+	}
 	section.hasExamples = section.examples && section.examples.length && section.examples.length > 0;
 	webView.html = Mustache.to_html(body, section);
 }

@@ -126,14 +126,14 @@
 		<div class="section">
 			<h2>Events</h2>
 			{{#events}}
-				<div class="method">
-					<h3><span class="type">{{{returntype}}}</span> {{{name}}}</h3>
+				<div class="method toggle">
+					<h3>{{{name}}}</h3>
 					<p>{{{value}}}</p>
 					<div class="parameters toggable">
-					{{#parameters}}
-						<h4><span class="type">{{{{type}}}}</span> {{{name}}}</h4>
+					{{#properties}}
+						<h4><span class="type">{{{name}}}</span></h4>
 						<p>{{{description}}}</p>
-					{{/parameters}}
+					{{/properties}}
 					</div>
 				</div>
 			{{/events}}
