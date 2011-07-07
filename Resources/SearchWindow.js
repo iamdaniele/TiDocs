@@ -131,21 +131,8 @@ var SearchWindow = {
 		SearchWindow.noResults.hide();
 		SearchWindow.noResults.add(SearchWindow.noResultsLabel);
 		SearchWindow.mainWindow.add(SearchWindow.noResults);
-
-		if(Ti.App.Properties.hasProperty('indexing')) {
-			var view = SearchWindow.indicator.show();
-			SearchWindow.mainWindow.add(view);
-
-			Ti.App.addEventListener('indexcomplete', function() {
-				Ti.API.info('index complete, hiding indicator');
-				SearchWindow.indicator.hide();
-				SearchWindow.start();
-			});
-		}
-		else {
-			SearchWindow.start();
-		}
-
+		
+		SearchWindow.start();
 	},
 	
 	start: function() {
