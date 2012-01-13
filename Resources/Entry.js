@@ -35,7 +35,7 @@ function prepareView() {
 				var properties = section.events[i].properties;
 				section.events[i].properties = [];
 				for(var p in properties) {
-					section.events[i].properties.push({name: p, description: properties[p]});
+					section.events[i].properties.push({name: properties[p].name, description: properties[p].summary});
 				}			
 			}
 		}

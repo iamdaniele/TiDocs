@@ -6,6 +6,7 @@
 		body * {font-family: "Helvetica Neue", "Helvetica", "Arial"; font-size: 1em; color: #333; word-wrap: break-word}
 		p {font-size: 0.8em}
 		a {-webkit-touch-callout: none !important;}
+		code {font-family: "Monaco", "Courier New"}
 		h3 {color: #f38400;}
 		.highlight {background: #fefbca;-webkit-border-radius:2pt;border-radius:2pt}
 		span.type {color: #aaa}
@@ -39,9 +40,6 @@
 		div.quickjump span.notes {background-image:url(images/notes.png)}
 		div.quickjump span.examples {background-image:url(images/examples.png)}
 		div.platforms span {font-size: 0.8em; color: #888; display:inline-block;word-wrap: normal; background: #fefefe;text-decoration:none;padding:0.2em;margin:0.2em;-webkit-border-radius:2pt;border-radius:2pt}
-		div.platforms span.ipad:after {content: "iPad"}
-		div.platforms span.iphone:after {content: "iPhone"}
-		div.platforms span.android:after {content: "Android"}
 		div.description img {display:block;max-width:100%;margin:0 auto}
 	</style>
 	<script src="zepto.js"></script>
@@ -72,11 +70,11 @@
 		<h1>{{{section}}}</h1>
 		<div class="platforms">
 			{{#platforms}}
-				<span class="{{.}}"></span>
+				<span>{{pretty_name}} ({{since}})</span>
 			{{/platforms}}
 		</div>
 		<div class="description">
-			{{{description}}}
+			{{{summary}}}
 		</div>
 		<div style="clear:both">&nbsp;</div>
 	</div>
@@ -94,12 +92,12 @@
 			{{#methods}}
 				<a class="anchor" id="{{name}}"></a>
 				<div class="method toggle">
-					<h3><span class="type">{{{returntype}}}</span> {{{name}}}<span class="param-list">({{#parameters}}<span class="type">{{{type}}}</span>{{/parameters}})</span></h3>
-					<p>{{{value}}}</p>
+					<h3><span class="type">{{#returns}}{{type}}{{/returns}}</span> {{name}}<span class="param-list">({{#parameters}}<span class="type">{{type}}</span>{{/parameters}})</span></h3>
+					<p>{{{summary}}}</p>
 					<div class="parameters toggable">
 						{{#parameters}}
-							<h4><span class="type">{{{type}}}</span> {{{name}}}</h4>
-							<p class="param-description">{{{description}}}</p>
+							<h4><span class="type">{{type}}</span> {{name}}</h4>
+							<p class="param-description">{{{summary}}}</p>
 						{{/parameters}}
 					</div>
 				</div>
@@ -114,8 +112,8 @@
 			{{#properties}}
 				<a class="anchor" id="{{name}}"></a>
 				<div class="method">
-					<h3><span class="type">{{{type}}}</span> {{{name}}}</h3>
-					<p>{{{value}}}</p>
+					<h3><span class="type">{{type}}</span> {{name}}</h3>
+					<p>{{{summary}}}</p>
 				</div>
 			{{/properties}}
 		</div>
@@ -127,12 +125,12 @@
 			<h2>Events</h2>
 			{{#events}}
 				<div class="method toggle">
-					<h3>{{{name}}}</h3>
-					<p>{{{value}}}</p>
+					<h3>{{name}}</h3>
+					<p>{{{summary}}}</p>
 					<div class="parameters toggable">
 					{{#properties}}
-						<h4><span class="type">{{{name}}}</span></h4>
-						<p>{{{description}}}</p>
+						<h4><span class="type">{{name}}</span></h4>
+						<p>{{{summary}}}</p>
 					{{/properties}}
 					</div>
 				</div>

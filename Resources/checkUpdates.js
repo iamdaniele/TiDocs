@@ -1,5 +1,5 @@
 Ti.include('UI.js');
-var BASE_URL = 'http://melonpielabs.com/tidocs/'
+var BASE_URL = 'TIDOCS_URL';
 var checkUpdates = function(callback) {
 	callback = callback || function() {};
 	if(!Ti.Network.online) {
@@ -58,7 +58,7 @@ var checkUpdates = function(callback) {
 
 					// update database
 					Ti.API.info('replacing database')
-					var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,'../Library/Application Support/database/cache.sqlite.sql');
+					var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationSupportDirectory, '../Private Documents', 'cache.sqlite.sql');
 					var c = Ti.Network.createHTTPClient();
 					c.setTimeout(10000);
 					c.onload = function(e){

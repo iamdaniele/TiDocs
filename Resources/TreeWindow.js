@@ -3,7 +3,9 @@ var path = Ti.UI.currentWindow.path || 'Titanium';
 var rows = [];
 
 var db = Ti.Database.open('cache.sqlite');
-var row = db.execute('SELECT * FROM entries WHERE parent = ? ORDER BY name', path);
+var query = 'SELECT * FROM entries WHERE parent = ? ' + (path == 'Titanium' ? 'OR parent = ""' : '')+' ORDER BY name';
+Ti.API.info(query.replace('?', path));
+var row = db.execute(query, path);
 
 rows.push({
 	title: path == 'Titanium' ? 'Titanium' : 'Module description',
